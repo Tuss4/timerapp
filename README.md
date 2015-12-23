@@ -138,7 +138,7 @@ A fitness timer app.
 + `401`
 + `404`
 
-## Update Timer
+## Delete Timer
 **DELETE:** `/v1/timer/:timer_id/`
 
 **Note(s):**
