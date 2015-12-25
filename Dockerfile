@@ -14,4 +14,4 @@ ADD . $GOPATH/src/code/
 EXPOSE 5000
 RUN . $GOPATH/src/code/dependencies.sh
 RUN go install
-CMD ["code"]
+CMD ["code", "runserver"]

@@ -14,7 +14,7 @@ var DatabaseURL = os.Getenv("DATABASE_URL")
 func dbConn() *sql.DB {
 	dbURL := DatabaseURL
 	if dbURL == "" {
-		dbURL = fmt.Sprintf("postgres://postgres:postgres@%s:5432/postgres", os.Getenv("DB_PORT_5432_TCP_ADDR"))
+		dbURL = fmt.Sprintf("postgres://postgres:postgres@%s:5432/postgres?sslmode=disable", os.Getenv("DB_PORT_5432_TCP_ADDR"))
 	}
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
