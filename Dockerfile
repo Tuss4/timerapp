@@ -9,3 +9,4 @@ ENV GOPATH /code
 WORKDIR /code
 ADD . /code/
 EXPOSE 5000
+CMD ["go", "run", "main.go"]

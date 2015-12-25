@@ -1,0 +1,14 @@
+api:
+    build: .
+    ports:
+        - "5000:5000"
+    volumes:
+        - .:/code:rw
+    links:
+        - db
+
+db:
+    image: postgres
+    environment:
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_USER=postgres
