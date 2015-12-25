@@ -1,5 +1,5 @@
-# timerapp
-A fitness timer app.
+# Timer Buddy API Documentation
+Tentative.
 
 # Contents
 + [Register User](#register-user)
