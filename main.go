@@ -11,8 +11,12 @@ var port = ":5000"
 
 // runServer runs the server
 func runServer() {
+	router.HandleFunc("/", Index)
+	router.HandleFunc("/user/login", UserLogin)
+	router.HandleFunc("/user/register", UserRegister)
+	router.HandleFunc("/user/{userID}", UserDetail)
 	fmt.Println("Server running on port", port)
-	err := http.ListenAndServe(port, nil)
+	err := http.ListenAndServe(port, router)
 	if err != nil {
 		log.Println(err)
 	}
