@@ -20,12 +20,11 @@ func runServer() {
 
 func main() {
 	db := dbConn()
-	er := db.Ping()
-	if er != nil {
+	err := db.Ping()
+	if err != nil {
 		fmt.Println("Error connecting to database.")
-		log.Println(er)
+		log.Println(err)
 	}
-	fmt.Println(os.Args)
 	switch {
 	case os.Args[1] == "runserver":
 		runServer()
