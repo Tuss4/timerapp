@@ -66,20 +66,16 @@ Tentative.
 
 **Response**
 ```json
-{
-    "count": 3,
-    "previous": null,
-    "next": null,
-    "results": [
-        {
-            "id": 1,
-            "user": 1,
-            "time": 75,
-            "created": "2015-12-23T06:57:53.150609Z"
-        },
-        ...
-    ]
-}
+
+ [
+    {
+        "id": 1,
+        "user": 1,
+        "time": 75,
+        "created": "2015-12-23T06:57:53.150609Z"
+    },
+    ...
+]
 ```
 
 **Status Codes:**
