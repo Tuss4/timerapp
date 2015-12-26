@@ -12,6 +12,6 @@ RUN mkdir -p $GOPATH/src/code
 WORKDIR $GOPATH/src/code
 ADD . $GOPATH/src/code/
 EXPOSE 5000
-RUN . $GOPATH/src/code/dependencies.sh
+RUN go get
 RUN go install
 CMD ["code", "runserver"]
