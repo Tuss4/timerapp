@@ -12,9 +12,9 @@ var port = ":5000"
 // runServer runs the server
 func runServer() {
 	router.HandleFunc("/", Index)
-	router.HandleFunc("/user/login", UserLogin)
-	router.HandleFunc("/user/register", UserRegister)
-	router.HandleFunc("/user/{userID}", UserDetail)
+	router.HandleFunc("/user/login", UserLogin).Methods("POST")
+	router.HandleFunc("/user/register", UserRegister).Methods("POST")
+	router.HandleFunc("/user/{userID}", UserDetail).Methods("GET")
 	fmt.Println("Server running on port", port)
 	err := http.ListenAndServe(port, router)
 	if err != nil {
@@ -35,4 +35,5 @@ func main() {
 	case os.Args[1] == "createdb":
 		createTables(db)
 	}
+	defer db.Close()
 }
