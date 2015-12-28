@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 )
 
 var port = ":5000"
@@ -23,6 +24,14 @@ func runServer(db *sql.DB) {
 	}
 }
 
+func getUUID() string {
+	out, err := exec.Command("uuidgen").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(out)
+}
+
 func main() {
 	db := dbConn()
 	err := db.Ping()
@@ -35,6 +44,8 @@ func main() {
 		runServer(db)
 	case os.Args[1] == "createdb":
 		createTables(db)
+	case os.Args[1] == "getuuid":
+		getUUID()
 	}
 	defer db.Close()
 }
