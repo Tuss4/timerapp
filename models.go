@@ -13,6 +13,7 @@ type User struct {
 	ID      int       `json:"id"`
 	Email   string    `json:"email"`
 	Created time.Time `json:"created"`
+	Token   string    `json:"token"`
 }
 
 // CreateUser struct for creating user
@@ -63,11 +64,10 @@ func (cu *CreateUser) craete(db *sql.DB) (User, error) {
 	if err != nil {
 		e = err
 	}
-	res, err := stmt.Exec(cu.Email, cu.Password)
+	_, err = stmt.Exec(cu.Email, cu.Password)
 	if err != nil {
 		e = err
 	}
-	fmt.Println(res)
 	stmt, err = db.Prepare(FetchUserByEmailQuery)
 	if err != nil {
 		e = err
@@ -77,4 +77,20 @@ func (cu *CreateUser) craete(db *sql.DB) (User, error) {
 		e = err
 	}
 	return u, e
+}
+
+func (cu *CreateUser) isConflict(db *sql.DB) bool {
+	stmt, err := db.Prepare(UserExistsQuery)
+	count := 0
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = stmt.QueryRow(cu.Email).Scan(&count)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if count == 1 {
+		return true
+	}
+	return false
 }

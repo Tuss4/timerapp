@@ -17,6 +17,9 @@ var FetchUserQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE
 // FetchUserByEmailQuery returns the user by email
 var FetchUserByEmailQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE u.email = $1;"
 
+// UserExistsQuery checks to see if user exists
+var UserExistsQuery = "SELECT COUNT(*) FROM users_user WHERE email = $1;"
+
 // createTables creates the tables in the database.
 func createTables(conn *sql.DB) {
 	q, err := conn.Exec(CreateUserTable)

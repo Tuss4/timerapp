@@ -25,22 +25,28 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func UserRegister(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	w.Header().Set("Content-Type", "application/json")
 	cu := CreateUser{}
+	BR := BadRequest{}
 	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&cu)
-	fmt.Println(cu)
 	if err != nil {
 		fmt.Println(err)
 	}
-	if cu.isValid() {
-		w.WriteHeader(http.StatusCreated)
-		nu, err := cu.craete(db)
-		if err != nil {
-			fmt.Println(err)
-		}
-		json.NewEncoder(w).Encode(nu)
-	} else {
-		BR := BadRequest{"Bad request."}
+	if cu.isConflict(db) {
+		w.WriteHeader(http.StatusConflict)
+		BR.Detail = "Email must be unique."
 		json.NewEncoder(w).Encode(BR)
+	} else {
+		if cu.isValid() {
+			w.WriteHeader(http.StatusCreated)
+			nu, err := cu.craete(db)
+			if err != nil {
+				fmt.Println(err)
+			}
+			json.NewEncoder(w).Encode(nu)
+		} else {
+			BR.Detail = "Bad request."
+			json.NewEncoder(w).Encode(BR)
+		}
 	}
 }
 

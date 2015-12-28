@@ -24,6 +24,8 @@ Tentative.
 ```json
 {
     "id": 1,
+    "email": "bruh@bruh.io",
+    "created": "2015-12-28T00:00:00Z",
     "token": "sup3rl3g1tT0ken"
 }
 ```
