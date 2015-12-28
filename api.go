@@ -57,6 +57,11 @@ func UserLogin(w http.ResponseWriter, r *http.Request) {
 
 // UserDetail user detail endpoint.
 func UserDetail(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	auth := r.Header.Get("Authorization")
+	if auth == "" {
+		auth = "No auth set, bruh."
+	}
+	fmt.Println(auth)
 	vars := mux.Vars(r)
 	userID := vars["userID"]
 	user := new(User)
