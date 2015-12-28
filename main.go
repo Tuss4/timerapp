@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,11 +11,11 @@ import (
 var port = ":5000"
 
 // runServer runs the server
-func runServer() {
+func runServer(db *sql.DB) {
 	router.HandleFunc("/", Index)
 	router.HandleFunc("/user/login", UserLogin).Methods("POST")
-	router.HandleFunc("/user/register", UserRegister).Methods("POST")
-	router.HandleFunc("/user/{userID}", UserDetail).Methods("GET")
+	router.HandleFunc("/user/register", func(w http.ResponseWriter, r *http.Request) { UserRegister(w, r, db) }).Methods("POST")
+	router.HandleFunc("/user/{userID}", func(w http.ResponseWriter, r *http.Request) { UserDetail(w, r, db) }).Methods("GET")
 	fmt.Println("Server running on port", port)
 	err := http.ListenAndServe(port, router)
 	if err != nil {
@@ -31,7 +32,7 @@ func main() {
 	}
 	switch {
 	case os.Args[1] == "runserver":
-		runServer()
+		runServer(db)
 	case os.Args[1] == "createdb":
 		createTables(db)
 	}

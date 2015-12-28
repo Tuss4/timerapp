@@ -11,8 +11,11 @@ var CreateUserTable = "CREATE TABLE users_user (id SERIAL PRIMARY KEY, email var
 // CreateUserQuery creates a new user
 var CreateUserQuery = "INSERT INTO users_user (email, password) VALUES($1, $2);"
 
-// FetchUserQuery returns the user by ID or email
+// FetchUserQuery returns the user by ID
 var FetchUserQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE u.id = $1;"
+
+// FetchUserByEmailQuery returns the user by email
+var FetchUserByEmailQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE u.email = $1;"
 
 // createTables creates the tables in the database.
 func createTables(conn *sql.DB) {
