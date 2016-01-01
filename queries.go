@@ -25,18 +25,54 @@ CREATE TABLE users_token (
 // CreateUserQuery creates a new user
 var CreateUserQuery = "INSERT INTO users_user (email, password) VALUES($1, $2);"
 
+// CreateTokenQuery creates a new auth token
+var CreateTokenQuery = "INSERT INTO users_token (user_id, token) VALUES($1, $2);"
+
 // FetchUserQuery returns the user by ID
-var FetchUserQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE u.id = $1;"
+var FetchUserQuery = `
+SELECT
+  u.id,
+  u.email,
+  u.created
+FROM
+  users_user AS u
+WHERE
+  u.id = $1;
+`
 
 // FetchUserByEmailQuery returns the user by email
-var FetchUserByEmailQuery = "SELECT u.id, u.email, u.created FROM users_user AS u WHERE u.email = $1;"
+var FetchUserByEmailQuery = `
+SELECT
+  u.id,
+  u.email,
+  u.created
+FROM
+  users_user AS u
+WHERE
+  u.email = $1;`
 
 // UserExistsQuery checks to see if user exists
-var UserExistsQuery = "SELECT COUNT(*) FROM users_user WHERE email = $1;"
+var UserExistsQuery = `
+SELECT
+  COUNT(*)
+FROM
+  users_user
+WHERE
+  email = $1;
+`
 
 // FetchUserFromTokenQuery
 var FetchUserFromTokenQuery = `
 SELECT
+  u.id,
+  u.email,
+  ut.token
+FROM
+  users_user AS u
+JOIN
+  users_token AS ut ON ut.user_id = u.id
+WHERE
+  ut.token = $1;
 `
 
 // createTables creates the tables in the database.
