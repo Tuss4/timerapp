@@ -3,7 +3,7 @@ api:
     ports:
         - "5000:5000"
     volumes:
-        - .:/code:rw
+        - .:/godir/src/code:rw
     links:
         - db
 
